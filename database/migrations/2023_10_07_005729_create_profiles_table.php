@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->cascadeOnDelete();
             $table->string('display_name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
@@ -20,6 +25,7 @@ return new class extends Migration
             $table->string('gender')->nullable();
             $table->string('address')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

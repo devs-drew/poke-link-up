@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,21 @@ class UsersController extends Controller
             'password' => $request->password,
         ]);
 
-        return response()->json($user, 201);
+        Profile::create([
+            'display_name' => $user->username,
+            'user_id' => $user->id,
+        ]);
+
+        return response()->json([
+            'id' => $user->id,
+            "attributes" => [
+                'username' => $user->username,
+                'email' => $user->email,
+                'profile' => $user->profile,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+            ]
+        ]);
     }
 
     /**
