@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class ExampleContoller extends Controller
 {
     /**
      * Create a new AuthController instance.
@@ -37,18 +37,7 @@ class UsersController extends Controller
      */
     public function store(Request $request, User $user)
     {
-        $this->validate($request, [
-            'username' => 'required|unique:users|max:255',
-            'email' => 'email|nullable|unique:users|max:255',
-            'password' => 'required|max:255',
-        ]);
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
-
-        return response()->json($user, 201);
+        //
     }
 
     /**
