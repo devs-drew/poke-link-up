@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +24,19 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 Route::post('auth/register', 'App\Http\Controllers\UsersController@store');
+
+Route::group([
+    'namespace' => 'App\Http\Controllers',
+], function () {
+    Route::apiResource('users', UsersController::class);
+
+    Route::get('profiles', 'ProfilesController@index');
+    Route::get('users/{user}/profile', 'ProfilesController@show');
+    Route::put('users/{user}/profile', 'ProfilesController@update');
+    Route::put('users/{user}/theme/', 'ProfilesController@theme');
+
+    Route::get('users/{user}/favorites', 'FavoritesController@index');
+    Route::post('users/{user}/favorites', 'FavoritesController@store');
+    Route::delete('users/{user}/favorites/{favorite}', 'FavoritesController@destroy');
+    // Route::get('users/{user}/favorites{favorite}', 'FavoritesController@show');
+});

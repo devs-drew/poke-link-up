@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Profile;
+use App\Models\Favorite;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -74,5 +75,10 @@ class User extends Authenticatable implements JWTSubject
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function favorite()
+    {
+        return $this->hasMany(Favorite::class, 'user_id', 'id');
     }
 }

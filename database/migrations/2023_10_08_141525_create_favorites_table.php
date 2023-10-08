@@ -11,22 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('favorites', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('user_id');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->cascadeOnDelete();
-            $table->string('pokemon_theme_id')->nullable();
-            $table->string('display_name');
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('full_name')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('address')->nullable();
+                ->onDelete('cascade');
+            $table->string('pokemon_id');
+            $table->string('pokemon_url');
+            $table->unique(['user_id', 'pokemon_id']);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('favorites');
     }
 };

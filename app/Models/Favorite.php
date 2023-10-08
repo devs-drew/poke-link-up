@@ -2,31 +2,25 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class Profile extends Model
+class Favorite extends Model
 {
     use HasFactory;
     use HasUuids;
 
     protected $fillable = [
-        'display_name',
-        'pokemon_theme_id',
         'user_id',
-        'first_name',
-        'last_name',
-        'full_name',
-        'gender',
-        'address',
+        'pokemon_id',
+        'pokemon_url',
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

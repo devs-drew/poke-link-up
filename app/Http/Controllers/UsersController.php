@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UsersResource;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return User::all();
     }
 
     /**
@@ -54,24 +55,15 @@ class UsersController extends Controller
             'user_id' => $user->id,
         ]);
 
-        return response()->json([
-            'id' => $user->id,
-            "attributes" => [
-                'username' => $user->username,
-                'email' => $user->email,
-                'profile' => $user->profile,
-                'created_at' => $user->created_at,
-                'updated_at' => $user->updated_at,
-            ]
-        ]);
+        return new UsersResource($user);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $book)
+    public function show(User $user)
     {
-        //
+        return new UsersResource($user);
     }
 
     /**
@@ -95,6 +87,8 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return response(null, 204);
     }
 }

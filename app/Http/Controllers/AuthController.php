@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UsersResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -77,10 +78,10 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         Auth::setToken($token)->user();
+        $user = new UsersResource(Auth::user());
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => Auth::factory()->getTTL() * 60,
+            'data' => $user,
+            'token' => $token,
         ]);
     }
 }
