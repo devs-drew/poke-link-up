@@ -42,10 +42,10 @@ class FavoritesController extends Controller
         $this->validate($request, [
             'pokemon_id' => [
                 'required',
-                Rule::unique('favorites')->where(function ($query) use ($user) {
-                    return $query->where('user_id', $user->id)
-                        ->where('pokemon_id', 'pokemon_id');
-                })
+                'max:3',
+                Rule::unique('favorites')->where(function ($query) use ($user, $request) {
+                    return $query->where('user_id', $user->id)->where('pokemon_id', $request->pokemon_id);
+                }),
             ],
         ]);
         $favorite = Favorite::create([
